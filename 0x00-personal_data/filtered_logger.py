@@ -5,7 +5,7 @@ from typing import List
 import re
 
 
-def filter_datum(fields: List, redaction: str,
+def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """
     Redacts the specified fields in a given message.
