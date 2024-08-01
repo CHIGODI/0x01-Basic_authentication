@@ -6,7 +6,7 @@ import re
 import logging
 import os
 import mysql.connector
-from mysql.connector import Error
+from mysql.connector import MySQLConnection
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -62,7 +62,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db():
+def get_db() -> MySQLConnection:
     """
     Establishes and returns a connection to the MySQL database using
     credentials from environment variables.
