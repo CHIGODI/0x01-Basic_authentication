@@ -4,6 +4,9 @@
 from typing import List, Tuple
 import re
 import logging
+import os
+import mysql.connector
+from mysql.connector import Error
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -57,3 +60,19 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+
+def get_db():
+    """"""
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+    host = os.getenv('PERSONAL_DATA_DB_HOST')
+    passwd = os.getenv('PERSONAL_DATA_DB_PASSWORD')
+    user = os.getenv('PERSONAL_DATA_DB_USERNAME')
+
+    conn = mysql.connector.connect(
+        host=host,
+        user=user,
+        password=passwd,
+        database=db_name
+    )
+    return conn
