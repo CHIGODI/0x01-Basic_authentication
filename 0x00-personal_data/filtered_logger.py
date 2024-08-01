@@ -63,7 +63,10 @@ def get_logger() -> logging.Logger:
 
 
 def get_db():
-    """"""
+    """
+    Establishes and returns a connection to the MySQL database using
+    credentials from environment variables.
+    """
     db_name = os.getenv('PERSONAL_DATA_DB_NAME')
     host = os.getenv('PERSONAL_DATA_DB_HOST')
     passwd = os.getenv('PERSONAL_DATA_DB_PASSWORD')
