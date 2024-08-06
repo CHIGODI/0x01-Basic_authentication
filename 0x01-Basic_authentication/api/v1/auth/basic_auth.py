@@ -10,9 +10,9 @@ class BasicAuth(Auth):
         """extract base64 from header"""
         if authorization_header is None:
             return None
-        elif type(authorization_header) is not str:
+        if not isinstance(authorization_header, str):
             return None
-        elif authorization_header[0:4] + '' != 'Basic ':
+        if not authorization_header.startswith('Basic '):
             return None
 
-        return authorization_header[4:-1]
+        return authorization_header[len('Basic '):-1]
