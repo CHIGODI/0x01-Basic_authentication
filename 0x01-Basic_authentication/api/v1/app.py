@@ -27,10 +27,9 @@ elif auth_type == 'basic_auth':
 def before_request():
     """before request"""
     if auth is None:
-        return None
-    print(request.path)
+        return None  # No authentication
     if auth.require_auth(request.path,
-                         ['/api/v1/status/',
+                         ['/api/v1/stat*/',
                           '/api/v1/unauthorized/',
                           '/api/v1/forbidden/']):
 
