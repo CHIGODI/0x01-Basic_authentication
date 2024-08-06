@@ -46,7 +46,7 @@ class BasicAuth(Auth):
 
         values = decoded_base64_authorization_header.split(':')
         pwd = values[1:]
-        return values[0], ('').join(pwd)
+        return values[0], (':').join(pwd)
 
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str)\

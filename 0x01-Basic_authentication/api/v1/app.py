@@ -29,7 +29,7 @@ def before_request():
     if auth is None:
         return None  # No authentication
     if auth.require_auth(request.path,
-                         ['/api/v1/stat*/',
+                         ['/api/v1/stats/',
                           '/api/v1/unauthorized/',
                           '/api/v1/forbidden/']):
 
