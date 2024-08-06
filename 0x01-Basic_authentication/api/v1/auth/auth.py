@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-""" Auth """
+""" Auth class"""
 
 from flask import request
 from typing import List, TypeVar
 
 
 class Auth:
-    """Auth"""
+    """Auth class"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Determines if the path requires authentication."""
@@ -28,5 +28,5 @@ class Auth:
         return authorization
 
     def current_user(self, request=None) -> TypeVar('User'):  # type: ignore
-        """current_user"""
+        """current_user return none"""
         return None
