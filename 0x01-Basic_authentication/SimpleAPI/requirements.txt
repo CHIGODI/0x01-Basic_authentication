@@ -34,3 +34,4 @@ typing-extensions==4.1.1
 urllib3==1.26.9
 Werkzeug==2.1.0
 zipp==3.7.0
+# find . -type d -name "__pycache__" -exec rm -r {} +

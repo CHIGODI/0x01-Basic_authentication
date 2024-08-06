@@ -3,4 +3,5 @@ SimpleAPI/api/__pycache__/
 SimpleAPI/api/v1/__pycache__/
 SimpleAPI/api/v1/views/__pycache__/
 SimpleAPI/models/__pycache__/
+SimpleAPI/api/v1/auth/__pycache__/
 
