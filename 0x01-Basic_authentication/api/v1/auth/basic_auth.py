@@ -58,7 +58,7 @@ class BasicAuth(Auth):
         # fetch possible user object with email = email
         users = User.search({'email': user_email})
 
-        if not users:
+        if len(users) == 0:
             return None
 
         for user in users:
