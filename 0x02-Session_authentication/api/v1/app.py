@@ -37,16 +37,12 @@ def before_request():
                           '/api/v1/forbidden/',
                           '/api/v1/auth_session/login/']):
 
-        if not isinstance(auth, SessionAuth) and\
-                auth.authorization_header(request) is None:
-            abort(401)
-        if isinstance(auth, SessionAuth) and not auth.session_cookie(request):
-            abort(401)
-
-        current_user = auth.current_user(request)
-        if current_user:
-            request.current_user = current_user
-        abort(403)
+        if auth.authorization_header(request) or auth.session_cookie(request):
+            current_user = auth.current_user(request)
+            if current_user:
+                request.current_user = current_user
+            abort(403)
+        abort(401)
 
 
 @app.errorhandler(404)
@@ -73,4 +69,4 @@ def forbiden(error) -> str:
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, debug=1)
