@@ -7,7 +7,7 @@ import os
 
 @app_views.route('/auth_session/login', methods=["POST"],
                  strict_slashes=False)
-def handle_all_routes():
+def login():
     """return current_user json"""
     email = request.form.get('email')
     password = request.form.get('password')
@@ -33,3 +33,15 @@ def handle_all_routes():
     response.set_cookie(os.getenv('SESSION_NAME'), session_cookie)
 
     return response
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout():
+    """Destroys sessions for current user when logging out"""
+    from api.v1.app import auth
+
+    if auth.destroy_session(request) is False:
+        abort(404)
+    auth.destroy_session(request)
+    return jsonify({}), 200
