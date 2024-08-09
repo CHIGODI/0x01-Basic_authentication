@@ -31,4 +31,3 @@ class SessionAuth(Auth):
         user_id = SessionAuth.user_id_by_session_id.get(session_id)
         user = User.get(user_id)
         return user
-
