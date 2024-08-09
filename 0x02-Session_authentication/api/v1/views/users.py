@@ -127,4 +127,4 @@ def update_user(user_id: str = None) -> str:
 @app_views.route('/me', methods=['GET'], strict_slashes=False)
 def get_me():
     """return curr user"""
-    return request.current_user
+    return request.current_user.to_json()
