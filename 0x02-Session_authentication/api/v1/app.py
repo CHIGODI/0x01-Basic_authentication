@@ -6,6 +6,7 @@ from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
+from api.v1.auth.session_auth import SessionAuth
 import os
 
 
@@ -22,8 +23,6 @@ elif auth_type == 'basic_auth':
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 elif auth_type == 'session_auth':
-    from api.v1.auth.session_auth import SessionAuth
-    print('here')
     auth = SessionAuth()
 
 
@@ -35,14 +34,19 @@ def before_request():
     if auth.require_auth(request.path,
                          ['/api/v1/status/',
                           '/api/v1/unauthorized/',
-                          '/api/v1/forbidden/']):
+                          '/api/v1/forbidden/',
+                          '/api/v1/auth_session/login/']):
 
-        if auth.authorization_header(request) is None:
+        if not isinstance(auth, SessionAuth) and\
+                auth.authorization_header(request) is None:
             abort(401)
-        if auth.current_user(request) is None:
-            abort(403)
-        else:
-            request.current_user = auth.current_user(request)
+        if isinstance(auth, SessionAuth) and not auth.session_cookie(request):
+            abort(401)
+
+        current_user = auth.current_user(request)
+        if current_user:
+            request.current_user = current_user
+        abort(403)
 
 
 @app.errorhandler(404)
