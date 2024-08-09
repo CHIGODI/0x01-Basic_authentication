@@ -23,6 +23,7 @@ elif auth_type == 'basic_auth':
     auth = BasicAuth()
 elif auth_type == 'session_auth':
     from api.v1.auth.session_auth import SessionAuth
+    print('here')
     auth = SessionAuth()
 
 
@@ -31,10 +32,6 @@ def before_request():
     """before request"""
     if auth is None:
         return None  # No authentication
-    print(auth.require_auth(request.path,
-                         ['/api/v1/status/',
-                          '/api/v1/unauthorized/',
-                          '/api/v1/forbidden/']))
     if auth.require_auth(request.path,
                          ['/api/v1/status/',
                           '/api/v1/unauthorized/',
