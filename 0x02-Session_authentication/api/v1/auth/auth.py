@@ -44,5 +44,6 @@ class Auth:
         if request:
             session_name = f'{os.getenv("SESSION_NAME")}='
             result = request.headers.get('Cookie')
-            return result[len(session_name):]
+            if result:
+                return result[len(session_name):]
         return None
