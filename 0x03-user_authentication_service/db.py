@@ -41,7 +41,7 @@ class DB:
             self._session.commit()
             return user
 
-    def find_user_by(self, **kwargs: Mapping) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Find user in db"""
         try:
             user: User = self._session.query(User).filter_by(**kwargs).one()
@@ -50,3 +50,13 @@ class DB:
         except InvalidRequestError:
             raise InvalidRequestError
         return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update user object"""
+        user = self.find_user_by(id=user_id)
+        if user:
+            for key, val in kwargs.items():
+                if not hasattr(user, key):
+                    raise ValueError
+                setattr(user, key, val),
+            self._session.commit()
