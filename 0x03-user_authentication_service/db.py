@@ -10,6 +10,7 @@ from user import Base, User
 from typing import Mapping
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
+import bcrypt
 
 
 class DB:
@@ -60,3 +61,7 @@ class DB:
                     raise ValueError
                 setattr(user, key, val),
             self._session.commit()
+
+    def _hash_password(self, password: str) -> bytes:
+        """Hash a password for storing."""
+        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
