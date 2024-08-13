@@ -33,10 +33,10 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email, hashed_password):
+    def add_user(self, email: str, hashed_password: str) -> User:
         """Add user to db"""
         if email and hashed_password:
-            user = User(email=email, hashed_password=hashed_password)
+            user: User = User(email=email, hashed_password=hashed_password)
             self._session.add(user)
             self._session.commit()
             return user
@@ -44,7 +44,7 @@ class DB:
     def find_user_by(self, **kwargs: Mapping) -> User:
         """Find user in db"""
         try:
-            user = self._session.query(User).filter_by(**kwargs).one()
+            user: User = self._session.query(User).filter_by(**kwargs).one()
         except NoResultFound:
             raise NoResultFound
         except InvalidRequestError:
