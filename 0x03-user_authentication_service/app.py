@@ -42,7 +42,7 @@ def login():
         if not AUTH.valid_login(email, password):
             Flask.abort(401)
         AUTH.create_session(email)
-        return {"email": email, "message": "logged in"}
+        return jsonify({"email": email, "message": "logged in"})
 
 
 if __name__ == '__main__':
