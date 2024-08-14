@@ -23,7 +23,7 @@ def users():
 
     if password and email:
         try:
-            AUTH.auth_register(email,
+            AUTH.register_user(email,
                                password)
         except Exception:
             return jsonify({"message": "email already registered"}), 400
