@@ -41,10 +41,12 @@ class Auth:
         """Checks if user login are valid"""
         try:
             user = self._db.find_user_by(email=email)
+            result = bcrypt.checkpw(password.encode('utf-8'),
+                                    user.hashed_password)
         except Exception as e:
             return False
 
-        if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+        if result:
             return True
         return False,
 
@@ -52,9 +54,8 @@ class Auth:
         """Creates a session"""
         try:
             user = self._db.find_user_by(email=email)
+            session_id = _generate_uuid()
+            self._db.update_user(user_id=user.id, session_id=session_id)
+            return session_id
         except Exception as e:
             pass
-
-        session_id = _generate_uuid()
-        self._db.update_user(user_id=user.id, session_id=session_id)
-        return session_id
