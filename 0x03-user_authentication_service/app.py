@@ -32,5 +32,18 @@ def users():
                         "message": "user created"})
 
 
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login():
+    """user login"""
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    if email and password:
+        if not AUTH.valid_login(email, password):
+            Flask.abort(401)
+        AUTH.create_session(email)
+        return {"email": email, "message": "logged in"}
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port="5000")
