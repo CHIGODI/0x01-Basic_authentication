@@ -48,7 +48,7 @@ class Auth:
 
         if result:
             return True
-        return False,
+        return False
 
     def create_session(self, email: str) -> str:
         """Creates a session"""
