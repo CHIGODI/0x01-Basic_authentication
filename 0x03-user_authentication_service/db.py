@@ -36,11 +36,10 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """Add user to db"""
-        if isinstance(str, email) and isinstance(str, hashed_password):
-            user: User = User(email=email, hashed_password=hashed_password)
-            self._session.add(user)
-            self._session.commit()
-            return user
+        user: User = User(email=email, hashed_password=hashed_password)
+        self._session.add(user)
+        self._session.commit()
+        return user
 
     def find_user_by(self, **kwargs) -> User:
         """Find user in db"""
