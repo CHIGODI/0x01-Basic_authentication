@@ -29,7 +29,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: List) -> None:
+    def __init__(self, fields: List[str]) -> None:
         """Init"""
         self.fields = fields
         super(RedactingFormatter, self).__init__(self.FORMAT)
@@ -37,8 +37,9 @@ class RedactingFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         """Redacting formater"""
         record.msg = filter_datum(self.fields, self.REDACTION,
-                                    record.getMessage(), self.SEPARATOR)
+                                  record.getMessage(), self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
+
 
 PII_FIELDS: Tuple[str, ...] = ('name', 'email', 'phone', 'ssn', 'password')
 
