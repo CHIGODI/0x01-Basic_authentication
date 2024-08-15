@@ -60,10 +60,9 @@ def logout():
     """logout endpoint"""
     session_id = request.cookies.get('session_id')
     try:
-        user = AUTH.get_user_from_session_id(session_id)
+        user = AUTH.get_user_from_session_id(session_id=session_id)
         AUTH.destroy_session(user.id)
         response = redirect(url_for('index'))
-        response.set_cookie('session_id', '', expires=0)
         return response
     except Exception:
         abort(403)
