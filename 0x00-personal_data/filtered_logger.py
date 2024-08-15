@@ -36,11 +36,10 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         """Redacting formater"""
-        original_log = super().format(record)
-        redacted_log = filter_datum(self.fields, self.REDACTION,
-                                    record.getMessage(), self.SEPARATOR)
-        return original_log.replace(record.getMessage(), redacted_log)
 
+        record.message = filter_datum(self.fields, self.REDACTION,
+                                    record.getMessage(), self.SEPARATOR)
+        return super().format(record)
 
 PII_FIELDS: Tuple[str, ...] = ('name', 'email', 'phone', 'ssn', 'password')
 
