@@ -42,7 +42,6 @@ def login():
     if not email or not password:
         abort(401)
 
-    print(AUTH.valid_login(email, password))
     if not AUTH.valid_login(email, password):
         abort(401)
 
@@ -59,11 +58,14 @@ def login():
 def logout():
     """logout endpoint"""
     session_id = request.cookies.get('session_id')
+    if session_id is None:
+        abort(403)
+
     try:
         user = AUTH.get_user_from_session_id(session_id=session_id)
         AUTH.destroy_session(user.id)
-        response = redirect(url_for('index'))
-        return response
+
+        return redirect(url_for('index'))
     except Exception:
         abort(403)
 
